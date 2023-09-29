@@ -2,9 +2,9 @@ import NotFound from "@/app/not-found";
 import Post from "@/components/Post";
 import { getPost } from "@/utils/helpers";
 
-const PostPage = ({ params }: { params: { id: number } }) => {
+const PostPage = async ({ params }: { params: { id: number } }) => {
   const postId = params.id;
-  const post = getPost(+postId);
+  const post = await getPost(postId);
 
   return post ? (
     <main className="mb-24 mt-24 max-w-lg m-auto">

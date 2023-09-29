@@ -1,22 +1,37 @@
 import { Post, User } from "../types";
-import { posts, users } from "../fakeDB";
+import { db } from "@/db";
 
-export function getPosts(): Post[] {
-  return posts.filter((post) => !post.replyId);
+export async function getPostsForUser(userId: number): Promise<Post[]> {
+  return (await db.query.post.findMany({
+    where: (posts, { eq }) => eq(posts.userId, userId),
+    with: {
+      user: true,
+      media: true,
+    },
+  })) as Post[];
 }
 
-export function getPost(id: number): Post | undefined {
-  return posts.find((post) => post.id === id);
+export async function getPosts(): Promise<Post[]> {
+  return (await db.query.post.findMany({
+    with: {
+      user: true,
+      media: true,
+    },
+  })) as Post[];
 }
 
-export function getPostResponses(id: number): Post[] {
-  return posts.filter((post) => post.replyId === id);
+export async function getPost(postId: number): Promise<Post> {
+  return (await db.query.post.findFirst({
+    where: (post, { eq }) => eq(post.id, postId),
+    with: {
+      user: true,
+      media: true,
+    },
+  })) as Post;
 }
 
-export function getUser(username: string): User | undefined {
-  return users.find((user) => user.username === username);
-}
-
-export function getPostsForUser(username: string): Post[] {
-  return posts.filter((post) => post.user.username === username);
+export async function getUser(username: string): Promise<User> {
+  return (await db.query.user.findFirst({
+    where: (users, { eq }) => eq(users.username, username),
+  })) as User;
 }

@@ -4,7 +4,7 @@ export type User = {
   firstName: string;
   lastName: string;
   avatar: string;
-  followers: number;
+  followers: number | null;
 };
 
 export type Media = {
@@ -17,11 +17,12 @@ export type Media = {
 
 export type Post = {
   id: number;
+  userId: number;
   user: User;
-  date: string;
+  date: Date;
   content: string;
-  likes: number;
-  replies: number;
+  likes: number | null;
+  replies: number | null;
   replyId?: number;
   media?: Media;
 };

@@ -1,12 +1,12 @@
-import { getPostsForUser, getUser } from "@/utils/helpers";
 import NotFound from "@/app/not-found";
 import Post from "@/components/Post";
 import Profile from "@/components/Profile";
+import { getPostsForUser, getUser } from "@/utils/helpers";
 
-const ProfilePage = ({ params }: { params: { username: string } }) => {
+const ProfilePage = async ({ params }: { params: { username: string } }) => {
   const username = params.username;
-  const user = getUser(username);
-  const posts = getPostsForUser(username);
+  const user = await getUser(username);
+  const posts = await getPostsForUser(user.id);
 
   return (
     <main className="mb-24 mt-24 max-w-lg m-auto">

@@ -1,8 +1,8 @@
-import { getPosts } from "@/utils/helpers";
 import Post from "@/components/Post";
+import { getPosts } from "@/utils/helpers";
 
-export default function Home() {
-  const posts = getPosts();
+export default async function Home() {
+  const posts = await getPosts();
 
   return (
     <main className="mb-24 mt-24 max-w-lg m-auto">
